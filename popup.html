@@ -26,6 +26,17 @@
       <input type="range" id="reminderInterval" min="15" max="120" step="15" value="60" class="slider">
     </div>
     
+    <div class="setting-group">
+      <label class="setting-label">
+        <span class="label-text">通知音の音量</span>
+        <span class="value-display" id="volumeValue">30%</span>
+      </label>
+      <div class="volume-row">
+        <input type="range" id="soundVolume" min="0" max="100" step="10" value="30" class="slider volume-slider">
+        <button class="test-button" id="testSoundButton">🔔</button>
+      </div>
+    </div>
+    
     <button class="save-button" id="saveButton">設定を保存</button>
     <p class="status" id="status"></p>
     

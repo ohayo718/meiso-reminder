@@ -4,11 +4,12 @@
 // デフォルト設定
 const DEFAULT_SETTINGS = {
   meditationDuration: 5,
-  reminderInterval: 60
+  reminderInterval: 60,
+  soundVolume: 30
 };
 
-// 音量設定（控えめ）
-const SOUND_VOLUME = 0.3;
+// 音量設定（設定から読み込み）
+let soundVolume = 0.3;
 
 let remainingTime = 0;
 let meditationDuration = 5;
@@ -45,7 +46,7 @@ function playStartSound() {
       oscillator.type = 'sine';
       oscillator.frequency.value = freq;
       
-      gainNode.gain.setValueAtTime(SOUND_VOLUME * gains[i], now);
+      gainNode.gain.setValueAtTime(soundVolume * gains[i], now);
       gainNode.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
       
       oscillator.connect(gainNode);
@@ -77,7 +78,7 @@ function playCompleteSound() {
       oscillator.frequency.value = freq;
       
       // ゆっくり減衰
-      gainNode.gain.setValueAtTime(SOUND_VOLUME * gains[i], now);
+      gainNode.gain.setValueAtTime(soundVolume * gains[i], now);
       gainNode.gain.exponentialRampToValueAtTime(0.001, now + 3);
       
       oscillator.connect(gainNode);
@@ -96,10 +97,12 @@ async function loadSettings() {
   try {
     const settings = await chrome.storage.sync.get(DEFAULT_SETTINGS);
     meditationDuration = settings.meditationDuration;
+    soundVolume = settings.soundVolume / 100; // パーセントを小数に変換
     remainingTime = meditationDuration * 60;
   } catch (error) {
     console.log('設定読み込みエラー:', error);
     remainingTime = DEFAULT_SETTINGS.meditationDuration * 60;
+    soundVolume = DEFAULT_SETTINGS.soundVolume / 100;
   }
 }
 
