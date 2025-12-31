@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "瞑想リマインダー",
+  "version": "1.0.0",
+  "description": "1時間毎に5分間の瞑想を促すChrome拡張機能",
+  "permissions": [
+    "alarms",
+    "tabs",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "瞑想リマインダー",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>瞑想リマインダー設定</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">瞑想リマインダー</h1>
+    
+    <div class="setting-group">
+      <label class="setting-label">
+        <span class="label-text">瞑想時間</span>
+        <span class="value-display" id="meditationValue">5分</span>
+      </label>
+      <input type="range" id="meditationDuration" min="1" max="30" value="5" class="slider">
+    </div>
+    
+    <div class="setting-group">
+      <label class="setting-label">
+        <span class="label-text">リマインド間隔</span>
+        <span class="value-display" id="intervalValue">60分</span>
+      </label>
+      <input type="range" id="reminderInterval" min="15" max="120" step="15" value="60" class="slider">
+    </div>
+    
+    <button class="save-button" id="saveButton">設定を保存</button>
+    <p class="status" id="status"></p>
+    
+    <button class="start-button" id="startButton">今すぐ瞑想を開始</button>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

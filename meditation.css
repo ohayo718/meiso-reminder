@@ -1,0 +1,191 @@
+/* 瞑想画面のスタイル */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", "Hiragino Sans", "Meiryo", sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 呼吸を促すアニメーション円 */
+.breathing-circle {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(100, 149, 237, 0.3) 0%,
+    rgba(100, 149, 237, 0) 70%
+  );
+  animation: breathe 8s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.8;
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: #fff;
+  padding: 40px;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 300;
+  margin-bottom: 20px;
+  letter-spacing: 0.1em;
+  animation: fadeIn 2s ease;
+}
+
+.instruction {
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 10px;
+  opacity: 0.9;
+  animation: fadeIn 2s ease 0.5s both;
+}
+
+.sub-instruction {
+  font-size: 1.2rem;
+  font-weight: 300;
+  opacity: 0.7;
+  animation: fadeIn 2s ease 1s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.timer-container {
+  margin-top: 60px;
+  animation: fadeIn 2s ease 1.5s both;
+}
+
+.timer {
+  font-size: 5rem;
+  font-weight: 200;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 30px rgba(100, 149, 237, 0.5);
+}
+
+.timer-label {
+  font-size: 1rem;
+  opacity: 0.6;
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.end-button {
+  margin-top: 60px;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: fadeIn 2s ease 2s both;
+}
+
+.end-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.end-button:active {
+  transform: scale(0.98);
+}
+
+/* 完了時のスタイル */
+.completed .timer {
+  color: #90ee90;
+  text-shadow: 0 0 30px rgba(144, 238, 144, 0.5);
+}
+
+.completed .title {
+  color: #90ee90;
+}
+
+/* 背景の星のエフェクト（オプション） */
+.container::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      2px 2px at 20px 30px,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    ),
+    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(
+      2px 2px at 50px 160px,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    ),
+    radial-gradient(2px 2px at 90px 40px, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(
+      2px 2px at 130px 80px,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 160px 120px,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
