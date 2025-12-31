@@ -1,6 +1,9 @@
 # 開発用ファイル
 generate_sounds.html
 
+# ストアアセット（Chrome Web Store用）
+store/
+
 # OS generated files
 .DS_Store
 Thumbs.db
