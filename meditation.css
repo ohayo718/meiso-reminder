@@ -94,8 +94,42 @@ body {
 }
 
 .timer-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 60px;
   animation: fadeIn 2s ease 1.5s both;
+}
+
+/* 呼吸ガイドリング - タイマーを囲む */
+.breath-guide-ring {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid rgba(100, 149, 237, 0.4);
+  animation: breatheRing 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.breath-guide-ring-inner {
+  width: 180px;
+  height: 180px;
+  border-color: rgba(100, 149, 237, 0.2);
+  animation-delay: 0.3s;
+}
+
+@keyframes breatheRing {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
 }
 
 .timer {
@@ -103,6 +137,7 @@ body {
   font-weight: 200;
   letter-spacing: 0.1em;
   text-shadow: 0 0 30px rgba(100, 149, 237, 0.5);
+  z-index: 5;
 }
 
 .timer-label {
@@ -111,6 +146,7 @@ body {
   margin-top: 10px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
+  z-index: 5;
 }
 
 .end-button {
@@ -177,15 +213,40 @@ body {
     );
   background-repeat: repeat;
   background-size: 200px 200px;
-  animation: twinkle 5s ease-in-out infinite;
+  animation: breatheBackground 8s ease-in-out infinite;
 }
 
-@keyframes twinkle {
-  0%,
-  100% {
-    opacity: 0.5;
+/* 背景の呼吸連動フェード効果 */
+@keyframes breatheBackground {
+  0%, 100% {
+    opacity: 0.4;
   }
   50% {
-    opacity: 1;
+    opacity: 0.9;
+  }
+}
+
+/* 背景全体の微妙な明滅 */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(100, 149, 237, 0.08) 0%, transparent 60%);
+  animation: breatheGlow 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes breatheGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
   }
 }
