@@ -150,9 +150,35 @@ function endMeditation() {
 // イベントリスナー
 endButton.addEventListener('click', endMeditation);
 
+// ボタンの自動フェード機能（5秒間操作がない場合）
+let fadeTimeout = null;
+const FADE_DELAY = 5000; // 5秒
+
+function fadeButton() {
+  endButton.classList.add('faded');
+}
+
+function showButton() {
+  endButton.classList.remove('faded');
+  resetFadeTimer();
+}
+
+function resetFadeTimer() {
+  if (fadeTimeout) {
+    clearTimeout(fadeTimeout);
+  }
+  fadeTimeout = setTimeout(fadeButton, FADE_DELAY);
+}
+
+// マウス移動でボタンを表示
+document.addEventListener('mousemove', showButton);
+document.addEventListener('touchstart', showButton);
+
 // ページ読み込み時に設定を読み込んでタイマー開始
 document.addEventListener('DOMContentLoaded', async () => {
   await loadSettings();
   updateTimerDisplay();
   startTimer();
+  // 初期フェードタイマーを開始
+  resetFadeTimer();
 });
