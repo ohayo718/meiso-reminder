@@ -127,7 +127,7 @@ function updateTimerDisplay() {
 }
 
 // 瞑想完了時の処理
-function onMeditationComplete() {
+async function onMeditationComplete() {
   // 完了音を再生
   playCompleteSound();
   
@@ -144,7 +144,110 @@ function onMeditationComplete() {
     timerLabel.style.display = 'none';
   }
   
+  // 履歴を保存して統計を表示
+  await saveMeditationHistory();
+  await displayStats();
+  
   endButton.textContent = '閉じる';
+}
+
+// 瞑想履歴を保存
+async function saveMeditationHistory() {
+  try {
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD形式
+    const result = await chrome.storage.sync.get({ meditationHistory: {} });
+    const history = result.meditationHistory;
+    
+    // 今日の記録を更新
+    if (!history[today]) {
+      history[today] = { count: 0, totalMinutes: 0 };
+    }
+    history[today].count++;
+    history[today].totalMinutes += meditationDuration;
+    
+    await chrome.storage.sync.set({ meditationHistory: history });
+  } catch (error) {
+    console.log('履歴保存エラー:', error);
+  }
+}
+
+// 統計を計算して表示
+async function displayStats() {
+  try {
+    const result = await chrome.storage.sync.get({ meditationHistory: {} });
+    const history = result.meditationHistory;
+    
+    // 連続日数を計算
+    const streak = calculateStreak(history);
+    
+    // 今月の合計時間を計算
+    const monthlyTotal = calculateMonthlyTotal(history);
+    
+    // 統計を表示
+    const streakElement = document.getElementById('statsStreak');
+    const totalElement = document.getElementById('statsTotal');
+    
+    if (streak > 0) {
+      if (streak === 1) {
+        streakElement.textContent = '🌱 今日から新しいスタート';
+      } else {
+        streakElement.textContent = `🔥 ${streak}日連続で瞑想中`;
+      }
+    }
+    
+    if (monthlyTotal > 0) {
+      totalElement.textContent = `📊 今月の合計: ${monthlyTotal}分`;
+    }
+  } catch (error) {
+    console.log('統計表示エラー:', error);
+  }
+}
+
+// 連続日数を計算
+function calculateStreak(history) {
+  const dates = Object.keys(history).sort().reverse();
+  if (dates.length === 0) return 0;
+  
+  const today = new Date().toISOString().split('T')[0];
+  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+  
+  // 今日か昨日に記録がなければ連続は途切れている
+  if (!history[today] && !history[yesterday]) return 0;
+  
+  let streak = 0;
+  let currentDate = new Date();
+  
+  // 今日に記録がなければ昨日から開始
+  if (!history[today]) {
+    currentDate = new Date(Date.now() - 86400000);
+  }
+  
+  while (true) {
+    const dateStr = currentDate.toISOString().split('T')[0];
+    if (history[dateStr]) {
+      streak++;
+      currentDate = new Date(currentDate.getTime() - 86400000);
+    } else {
+      break;
+    }
+  }
+  
+  return streak;
+}
+
+// 今月の合計時間を計算
+function calculateMonthlyTotal(history) {
+  const now = new Date();
+  const yearMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  
+  let total = 0;
+  for (const [date, data] of Object.entries(history)) {
+    if (date.startsWith(yearMonth)) {
+      total += data.totalMinutes;
+    }
+  }
+  
+  return total;
 }
 
 // 瞑想を終了（タブを閉じる）
