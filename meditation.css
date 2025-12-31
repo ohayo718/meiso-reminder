@@ -186,12 +186,24 @@ body {
 
 /* 完了時のスタイル */
 .completed .timer {
-  color: #90ee90;
-  text-shadow: 0 0 30px rgba(144, 238, 144, 0.5);
+  font-size: 3.5rem;
+  color: #c9b8e8;
+  text-shadow: 0 0 30px rgba(201, 184, 232, 0.5);
 }
 
 .completed .title {
-  color: #90ee90;
+  font-size: 2rem;
+  color: #c9b8e8;
+}
+
+.completed .instruction {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.completed .breath-guide-ring {
+  animation: none;
+  opacity: 0.2;
+  transform: scale(1);
 }
 
 /* 背景の星のエフェクト（オプション） */

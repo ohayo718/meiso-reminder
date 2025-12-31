@@ -132,10 +132,18 @@ function onMeditationComplete() {
   playCompleteSound();
   
   container.classList.add('completed');
-  timerElement.textContent = '完了！';
-  document.querySelector('.title').textContent = 'お疲れ様でした';
-  document.querySelector('.instruction').textContent = '素晴らしい瞑想でした';
-  document.querySelector('.sub-instruction').textContent = '心がリフレッシュされましたね';
+  
+  // 落ち着いたトーンの文言に変更
+  timerElement.textContent = '完了';
+  document.querySelector('.title').textContent = '静かな時間を過ごせましたね';
+  document.querySelector('.instruction').textContent = `${meditationDuration}分間の瞑想を完了しました`;
+  
+  // 「残り時間」ラベルを非表示に
+  const timerLabel = document.querySelector('.timer-label');
+  if (timerLabel) {
+    timerLabel.style.display = 'none';
+  }
+  
   endButton.textContent = '閉じる';
 }
 
