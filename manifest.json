@@ -5,7 +5,6 @@
   "description": "1時間毎に5分間の瞑想を促すChrome拡張機能",
   "permissions": [
     "alarms",
-    "tabs",
     "storage"
   ],
   "background": {
